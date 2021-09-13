@@ -1,2 +1,2 @@
-# ansible-install-proxmox
+# Proxmox
 Ansible role to install Proxmox VE 6
