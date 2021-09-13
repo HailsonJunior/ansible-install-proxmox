@@ -1,0 +1,5 @@
+--- 
+# tasks file for instalacao-proxmox
+- include: prepare-environment.yml
+- include: repository.yml
+- include: install.yml

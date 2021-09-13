@@ -1,0 +1,49 @@
+---
+- name: Change hostname
+  hostname:
+    name: proxmox
+  tags: hostname
+
+- name: Verify line in hosts - localhost
+  shell: grep -c "^::1     localhost ip6-localhost ip6-loopback" /etc/hosts || true
+  register: test_grep
+  tags: hosts
+
+- name: Configure hosts - localhost
+  lineinfile:
+    path: /etc/hosts
+    line: '::1     localhost ip6-localhost ip6-loopback'
+  when: test_grep.stdout == "0"
+  tags: hosts
+
+- name: Verify line in hosts - ip6-allnodes
+  shell: grep -c "^ff02::1 ip6-allnodes" /etc/hosts || true
+  register: test_grep
+  tags: hosts
+
+- name: Configure hosts - ip6-allnodes
+  lineinfile:
+    path: /etc/hosts
+    line: 'ff02::2 ip6-allnodes'
+  when: test_grep.stdout == "0"
+  tags: hosts
+
+- name: Verify line in hosts - ip6-allrouters
+  shell: grep -c "^ff02::2 ip6-allrouters" /etc/hosts || true
+  register: test_grep
+  tags: hosts
+ 
+- name: Configure hosts - ip6-allrouters
+  lineinfile:
+    path: /etc/hosts
+    line: 'ff02::2 ip6-allrouters'
+  when: test_grep.stdout == "0"
+  tags: hosts
+
+- name: Install wget
+  apt:
+    name: wget
+    state: latest
+  tags: install-wget
+
+...

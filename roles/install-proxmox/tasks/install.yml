@@ -1,0 +1,35 @@
+---
+- name: Update environemnt
+  apt:
+    update_cache: yes
+  tags: update
+
+- name: Upgrade environment
+  apt:
+    name: "*"
+    state: latest
+  tags: update
+
+- name: Install Proxmox and others necessary packages
+  apt:
+    name:
+      - proxmox-ve
+      - postfix
+      - open-iscsi
+      - ksm-control-daemon
+    state: latest
+  tags: install-packages
+
+- name: Remove os-prober
+  apt:
+    name: os-prober
+    state: absent
+  tags: remove-packages
+
+- name: Install openvswitch-switch
+  apt:
+    name: openvswitch-switch
+    state: latest
+  tags: install-packages
+ 
+...
