@@ -3,6 +3,15 @@
   shell: wget http://download.proxmox.com/debian/proxmox-ve-release-6.x.gpg -O /etc/apt/trusted.gpg.d/proxmox-ve-release-6.x.gpg
   tags: get-proxmox
 
+- name: Create repository
+  file:
+    path: /etc/apt/sources.list.d/pve-no-subscription.list
+    state: touch
+    mode: '0644'
+    owner: root
+    group: root
+  tags: create-repo
+
 - name: Adjust pve-no-subscription repository - comment line
   replace:
     path: /etc/apt/sources.list.d/pve-no-subscription.list
